@@ -16,6 +16,9 @@ logging.basicConfig(
     ]
 )
 
+# Force the Google GenAI SDK logger to only speak up if there is a WARNING or ERROR
+logging.getLogger("google.genai").setLevel(logging.WARNING)
+
 def initialize_assistant() -> genai.Client:
     """Loads environment variables and returns an initialized Gemini client."""
     logging.info("Initializing environment variables...")
@@ -83,7 +86,7 @@ def conduct_research(client: genai.Client, topic: str):
     except Exception as e:
         # Prevents violent script crashes, logs the backtrace info, and keeps app stable
         logging.error(f"Network call failed or timed out! API Exception Details: {e}")
-        print("\n❌ [System Error]: Unable to reach Gemini servers right now.")
+        print("\n❌[System Error]: Unable to reach Gemini servers right now.")
         print("Please verify your internet connection or check 'app.log' for details.")
 
 
@@ -93,11 +96,9 @@ def main():
     # Initialize our SDK configuration securely
     client = initialize_assistant()
     
-    print("\n==================================================")
-    print("Welcome to your Personal Research Assistant CLI 🎓")
-    print("==================================================")
-    
-    # Enter an interactive loop so the user can query multiple things without restarting
+    print("\nWelcome to your Personal Research Assistant CLI!")
+   
+     # Enter an interactive loop so the user can query multiple things without restarting
     while True:
         try:
             print("\nWhat topic would you like to investigate today?")
