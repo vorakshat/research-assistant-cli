@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from dotenv import load_dotenv
 
 # Import the core functions directly from your assistant script
-from Phase1.c3_RAssistant import conduct_research, initialize_assistant
+from Phase1.research_assistant import conduct_research, initialize_assistant
 
 # TEST 1: isolated environment and config validation
 def test_env_loading():
@@ -16,11 +16,11 @@ def test_env_loading():
 # TEST 2: SIMULATING A SUCCESSFUL API CYCLE (200 OK)
 # @patch intercepts the SDK client network call and replaces it with a fake
 @patch("google.genai.Client")
-def test_conduct_research_success(mock_client_class, caplog):
+def test_conduct_research_success(mock_client_class, caplog): # mock_client_class is a fake version of google.genai.Client
     """Simulates a flawless API call to ensure successful logs are firing."""
     
     # 1. Setup our Fake/Mocked response structure
-    mock_response = MagicMock()
+    mock_response = MagicMock() # MagicMock is a blank-slate object provided by Python. You can tap any attribute onto it out of thin air, and it will just accept it.
     mock_response.text = "## SUMMARY\nFake summary data\n\n## KEY POINTS\n* Point 1\n\n## SUGGESTED FOLLOW-UP QUESTIONS\n* Question 1"
     
     # 2. Configure the fake client to return our fake response when called
@@ -65,3 +65,4 @@ def test_conduct_research_empty_input(mock_client_class, caplog):
     # Verify our input validation script issued a warning log instead of hitting the network
     assert "User submitted an empty input string." in caplog.text
     mock_client_instance.models.generate_content.assert_not_called()
+    
