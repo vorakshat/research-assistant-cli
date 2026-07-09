@@ -1,2 +1,17 @@
-.venv/
+# Secure your API tokens and keys
 .env
+*.env
+
+# Block python virtual environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Block your local testing upload directory (Prevent pushing random test PDFs to GitHub)
+Phase2/uploaded_docs/
+uploaded_docs/
+
+# Block OS specific metadata
+.DS_Store
+Thumbs.db
